@@ -23,3 +23,6 @@ $router->delete('/auth', 'AuthenticationController@logout');
 
 // Search routes
 $router->get('/search', 'HomeController@search');
+
+// History routes
+$router->get('/history', 'HomeController@history');

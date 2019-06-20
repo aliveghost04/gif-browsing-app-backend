@@ -53,4 +53,13 @@ class HomeController extends Controller
             ], 500);
         }
     }
+
+    public function history(Request $request) {
+        $itemsPerPage = $request->input('perPage', 5);
+
+        return response()->json(
+            Log::where('user_id', $request->user()->id)
+                ->paginate($itemsPerPage)
+        );
+    }
 }
