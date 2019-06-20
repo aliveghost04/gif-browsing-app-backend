@@ -1,5 +1,7 @@
 <?php
 
+// use App\Http\Controllers;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -14,3 +16,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+// Authentication routes
+$router->post('/auth', 'AuthenticationController@login');
+$router->delete('/auth', 'AuthenticationController@logout');
