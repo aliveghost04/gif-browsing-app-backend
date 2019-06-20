@@ -35,7 +35,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($request->is('auth')) {
+        if ($request->is('auth') || $request->is('search')) {
             return $next($request);
         }
 

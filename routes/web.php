@@ -20,3 +20,6 @@ $router->get('/', function () use ($router) {
 // Authentication routes
 $router->post('/auth', 'AuthenticationController@login');
 $router->delete('/auth', 'AuthenticationController@logout');
+
+// Search routes
+$router->get('/search', 'HomeController@search');
