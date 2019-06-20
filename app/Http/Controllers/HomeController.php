@@ -55,7 +55,7 @@ class HomeController extends Controller
     }
 
     public function history(Request $request) {
-        $itemsPerPage = $request->input('perPage', 5);
+        $itemsPerPage = $request->input('limit', 15);
 
         return response()->json(
             Log::where('user_id', $request->user()->id)

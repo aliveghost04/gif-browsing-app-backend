@@ -26,3 +26,8 @@ $router->get('/search', 'HomeController@search');
 
 // History routes
 $router->get('/history', 'HomeController@history');
+
+// Favorite routes
+$router->get('/favorite', 'FavoriteController@getAll');
+$router->post('/favorite', 'FavoriteController@create');
+$router->delete('/favorite/{id}', 'FavoriteController@delete');

@@ -69,6 +69,6 @@ class AuthenticationController extends Controller
             ]);
         }
 
-        return response('', 202);
+        return response('', 204);
     }
 }
