@@ -59,6 +59,8 @@ class HomeController extends Controller
 
         return response()->json(
             Log::where('user_id', $request->user()->id)
+                ->where('action', 'search')
+                ->orderBy('created_at', 'desc')
                 ->paginate($itemsPerPage)
         );
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use App\User;
 use App\Log;
@@ -27,10 +29,14 @@ class AuthenticationController extends Controller
 
         // Query for the user in the database
         $user = User::where('email', $email)
-            ->where('password', $password)
             ->first();
-
+        
+        $isValid = false;
         if ($user) {
+            $isValid = password_verify($password, $user->password);
+        }
+        
+        if ($isValid) {
             // Log the user login action
             Log::create([
                 'user_id' => $user->id,
@@ -70,5 +76,31 @@ class AuthenticationController extends Controller
         }
 
         return response('', 204);
+    }
+
+    public function register(Request $request) {
+        $user = $request->all();
+
+        $user['first_name'] = $user['firstName'];
+        $user['last_name'] = $user['lastName'];
+        $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+        
+        try {
+            DB::beginTransaction();
+            $userCreated = User::create($user);
+            Log::create([
+                'action' => 'register',
+                'ip' => $request->ip(),
+                'user_id' => $userCreated->id
+            ]);
+            DB::commit();
+
+            return response('', 204);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => 'Something wrong happened, please try again later'
+            ], 500);
+        }
     }
 }
