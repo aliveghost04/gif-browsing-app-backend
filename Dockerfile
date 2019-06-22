@@ -10,6 +10,6 @@ RUN apt-get update -y && apt-get install -y openssl zip unzip git \
 && composer install \
 && php artisan cache:clear
 
-CMD php -S 0.0.0.0:80 -t /app/public
+CMD sh ./run.sh
 
 EXPOSE 80
